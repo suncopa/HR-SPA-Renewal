@@ -51,6 +51,7 @@ header {
 
 .card {
   flex: 0 1 calc(25% - 20px); /* 25%로 설정하고 간격을 빼줌 */
+  width: 200px;
   height: 260px;
   position: relative;
   border-radius: 25px;
