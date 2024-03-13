@@ -14,7 +14,9 @@ const routes = [
 ];
 
 const App = async () => {
-  new Header(document.querySelector(".app"));
+  if (!document.querySelector("header")) {
+    new Header(document.querySelector(".app"));
+  }
 
   const main = document.createElement("main");
   main.id = "page_content";
@@ -28,7 +30,6 @@ const App = async () => {
   });
 
   let match = pageMatches.find((pageMatch) => pageMatch.isMatch);
-  console.log(match);
   new match.route.view(document.querySelector("#page_content"));
 };
 

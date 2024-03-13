@@ -12,17 +12,6 @@ class ContentTitle extends Component {
         </div>
     `;
   }
-
-  setEvent() {
-    this.addEvent("click", ".menu_name", (e) => {
-      const $menu = e.target.id;
-      if ($menu === "menu_home") {
-        navigate("/web/");
-      } else if ($menu === "menu_signup") {
-        navigate("/web/signup");
-      }
-    });
-  }
 }
 
 export default ContentTitle;
