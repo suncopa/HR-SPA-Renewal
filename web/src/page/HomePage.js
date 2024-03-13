@@ -28,6 +28,8 @@ class HomePage extends Component {
 }
 
 class Card extends Component {
+  $elem;
+
   setup() {
     this.$state = {
       idx: this.$props.idx,
@@ -43,23 +45,32 @@ class Card extends Component {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card");
     const frontDiv = document.createElement("div");
-    frontDiv.classList.add(["card_plane", "card_plane--front"]);
+    frontDiv.classList.add("card_plane", "card_plane--front");
     frontDiv.innerText = this.$state.profile.name;
 
     const backDiv = document.createElement("div");
-    backDiv.classList.add(["card_plane", "card_plane--back"]);
+    backDiv.classList.add("card_plane", "card_plane--back");
     backDiv.innerText = this.$state.profile.mbti;
 
     cardDiv.appendChild(frontDiv);
     cardDiv.appendChild(backDiv);
+    this.$elem = cardDiv;
 
     return cardDiv;
+  }
+
+  addEvent(eventType, selector, callback) {
+    //이벤트 등록 추상화
+    this.$elem.addEventListener(eventType, (event) => {
+      if (!event.target.closest(selector)) return false;
+      callback(event);
+    });
   }
 
   setEvent() {
     this.addEvent("click", ".card", (e) => {
       const card = e.target.closest(".card");
-      card.classList.toggle("flipped");
+      card.classList.toggle("is-flipped");
     });
   }
 }
