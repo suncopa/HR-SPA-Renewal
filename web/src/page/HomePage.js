@@ -29,12 +29,14 @@ class HomePage extends Component {
 
 class Card extends Component {
   $elem;
+  cardStatusArr;
 
   setup() {
     this.$state = {
       idx: this.$props.idx,
       profile: this.$props.profile,
     };
+    this.cardStatusArr = JSON.parse(localStorage.getItem('cardStatus'));
   }
 
   render() {
@@ -43,7 +45,10 @@ class Card extends Component {
 
   template() {
     const cardDiv = document.createElement("div");
-    cardDiv.classList.add("card");
+    // localStorage에서 card status를 가져온 후, className 할당
+    const cardClassName = this.cardStatusArr ? this.cardStatusArr[this.$state.idx].status : 'card';
+    cardDiv.className = cardClassName;
+
     const frontDiv = document.createElement("div");
     frontDiv.classList.add("card_plane", "card_plane--front");
     frontDiv.innerText = this.$state.profile.name;
@@ -71,7 +76,15 @@ class Card extends Component {
     this.addEvent("click", ".card", (e) => {
       const card = e.target.closest(".card");
       card.classList.toggle("is-flipped");
+      this.updateLocalStorage();
     });
+  }
+
+  updateLocalStorage() {
+    this.cardStatusArr = [...this.$target.children].map((elem, idx) => {
+      return { idx, status: elem.className }
+    })
+    localStorage.setItem('cardStatus', JSON.stringify(this.cardStatusArr));
   }
 }
 
